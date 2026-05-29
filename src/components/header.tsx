@@ -1,9 +1,8 @@
-import { Feather } from "@expo/vector-icons"; // Importa ícones
-import { useState } from "react"; // Hook de estado
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native"; // Componentes do React Native
-import colors from "tailwindcss/colors"; // Cores
-
-// Tipos das props
+import { Feather } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import { useState } from "react";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import colors from "tailwindcss/colors";
 type HeaderProps = {
   title: string;
   cartQuantityItems?: number;
@@ -31,17 +30,18 @@ export function Header({ title, cartQuantityItems = 0 }: HeaderProps) {
               <Feather name="search" color={colors.white} size={24} />
             </TouchableOpacity>
 
-            {/* Carrinho */}
-            <TouchableOpacity className="relative">
-              <Feather name="shopping-bag" color={colors.white} size={24} />
+            {/* Quantidade de itens */}
+            {cartQuantityItems > 0 && (
+              <Link href={"/cart" as any} asChild>
+                <TouchableOpacity className="relative" activeOpacity={0.7}>
+                  <View className="absolute -top-2 -right-2 bg-lime-300 w-4 h-4 rounded-full items-center justify-center">
+                    <Text className="text-xs">{cartQuantityItems}</Text>
+                  </View>
 
-              {/* Quantidade de itens */}
-              {cartQuantityItems > 0 && (
-                <View className="absolute -top-2 -right-2 bg-lime-300 w-4 h-4 rounded-full items-center justify-center">
-                  <Text className="text-xs">{cartQuantityItems}</Text>
-                </View>
-              )}
-            </TouchableOpacity>
+                  <Feather name="shopping-bag" color={colors.white} size={24} />
+                </TouchableOpacity>
+              </Link>
+            )}
           </View>
         </View>
       ) : (
